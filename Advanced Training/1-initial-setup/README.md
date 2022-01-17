@@ -187,13 +187,13 @@ watch kubectl get tigerastatus
 
 ### 1.1.4. Apply the license
 
-Wait util the `apiserver` shows an status of `True` under the `Available` column, then press `Ctrl+C` to return to the prompt, and apply the license file:
+Wait until the `apiserver` shows an status of `True` under the `Available` column, then press `Ctrl+C` to return to the prompt, and apply the license file:
 
 ```
 kubectl create -f /home/tigera/license.yaml
 ```
 
-Check all components become available before proceding further (this can take few minutes):
+Check all components become available before proceeding further (this can take few minutes):
 
 ```
 watch kubectl get tigerastatus
@@ -214,7 +214,7 @@ monitor               True        False         False      4m50s
 
 ### 1.1.5. Secure calico system components
 
-As part of the installtion process, we will implement Network security Policies to protect calico components but allow the communication between them, so we can follow a zero trust security approach. Implement the following calico network policies to the environment:
+As part of the installation process, we will implement Network security Policies to protect calico components but allow the communication between them, so we can follow a zero trust security approach. Implement the following calico network policies to the environment:
 
 ```
 kubectl create -f https://docs.tigera.io/manifests/tigera-policies.yaml
@@ -698,7 +698,7 @@ To access Kibana, you must use the default `elastic` username. In order to retri
 kubectl -n tigera-elasticsearch get secret tigera-secure-es-elastic-user -o go-template='{{.data.elastic | base64decode}}' && echo
 ```
 
-Similarly to what you did on the previous step, record the passsword so you can retrieve it later for subsequent labs
+Similarly to what you did on the previous step, record the password so you can retrieve it later for subsequent labs
 
 Now try to access Kibana from the left toolbar in Calico Enterprise as indicated on the figure below. This will open a new tab where you must introduce the username (`elastic`) and password retrieved before:
 
