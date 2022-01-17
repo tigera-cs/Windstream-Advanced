@@ -86,7 +86,7 @@ Then, we can apply the manifest which will create the customer resources and nee
 ```
 kubectl apply -f -<<EOF
 # This section includes base Calico Enterprise installation configuration.
-# For more information, see: https://docs.tigera.io/v3.10/reference/installation/api#operator.tigera.io/v1.Installation
+# For more information, see: https://docs.tigera.io/v3.11/reference/installation/api#operator.tigera.io/v1.Installation
 apiVersion: operator.tigera.io/v1
 kind: Installation
 metadata:
@@ -107,7 +107,7 @@ spec:
 
 # This section configures the Tigera web manager.
 # Remove this section for a Managed cluster.
-# For more information, see: https://docs.tigera.io/v3.10/reference/installation/api#operator.tigera.io/v1.Manager
+# For more information, see: https://docs.tigera.io/v3.11/reference/installation/api#operator.tigera.io/v1.Manager
 apiVersion: operator.tigera.io/v1
 kind: Manager
 metadata:
@@ -121,7 +121,7 @@ spec:
 ---
 
 # This section installs and configures the Calico Enterprise API server.
-# For more information, see: https://docs.tigera.io/v3.10/reference/installation/api#operator.tigera.io/v1.APIServer
+# For more information, see: https://docs.tigera.io/v3.11/reference/installation/api#operator.tigera.io/v1.APIServer
 apiVersion: operator.tigera.io/v1
 kind: APIServer
 metadata:
@@ -130,7 +130,7 @@ metadata:
 ---
 
 # This section installs and configures Calico Enterprise compliance functionality.
-# For more information, see: https://docs.tigera.io/v3.10/reference/installation/api#operator.tigera.io/v1.Compliance
+# For more information, see: https://docs.tigera.io/v3.11/reference/installation/api#operator.tigera.io/v1.Compliance
 apiVersion: operator.tigera.io/v1
 kind: Compliance
 metadata:
@@ -139,7 +139,7 @@ metadata:
 ---
 
 # This section installs and configures Calico Enterprise intrusion detection functionality.
-# For more information, see: https://docs.tigera.io/v3.10/reference/installation/api#operator.tigera.io/v1.IntrusionDetection
+# For more information, see: https://docs.tigera.io/v3.11/reference/installation/api#operator.tigera.io/v1.IntrusionDetection
 apiVersion: operator.tigera.io/v1
 kind: IntrusionDetection
 metadata:
@@ -149,7 +149,7 @@ metadata:
 
 # This section configures the Elasticsearch cluster used by Calico Enterprise.
 # Remove this section for a Managed cluster.
-# For more information, see: https://docs.tigera.io/v3.10/reference/installation/api#operator.tigera.io/v1.LogStorage
+# For more information, see: https://docs.tigera.io/v3.11/reference/installation/api#operator.tigera.io/v1.LogStorage
 apiVersion: operator.tigera.io/v1
 kind: LogStorage
 metadata:
@@ -161,7 +161,7 @@ spec:
 ---
 
 # This section configures collection of Tigera flow, DNS, and audit logs.
-# For more information, see: https://docs.tigera.io/v3.10/reference/installation/api#operator.tigera.io/v1.LogCollector
+# For more information, see: https://docs.tigera.io/v3.11/reference/installation/api#operator.tigera.io/v1.LogCollector
 apiVersion: operator.tigera.io/v1
 kind: LogCollector
 metadata:
@@ -170,11 +170,13 @@ metadata:
 ---
 
 # This section configures Prometheus for Calico Enterprise.
-# For more information, see: https://docs.tigera.io/v3.10/reference/installation/api#operator.tigera.io/v1.Monitor
+# For more information, see: https://docs.tigera.io/v3.11/reference/installation/api#operator.tigera.io/v1.Monitor
 apiVersion: operator.tigera.io/v1
 kind: Monitor
 metadata:
   name: tigera-secure
+
+---
 
 EOF
 ```
