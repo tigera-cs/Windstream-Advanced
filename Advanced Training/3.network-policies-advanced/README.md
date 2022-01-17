@@ -11,7 +11,7 @@ Steps: \
 
 ## 3.1. Define globalnetworkset for external endpoints
 
-In this lab, we will start by defining Calico globalnetworkset for external endpoint. This allows for matching sources and destinations foreign to the cluster in network policies in a cloud-native way. 
+In this lab, we will start by defining Calico globalnetworkset for an external endpoint. This allows for matching sources and destinations foreign to the cluster in network policies in a cloud-native way. 
 
 ```
 kubectl apply -f -<<EOF
@@ -194,7 +194,7 @@ EOF
 
 Notice the use of `selector (has(node-role.kubernetes.io/control-plane) || has(node-role.kubernetes.io/worker))`, which matches both worker and master nodes. Policies are allowing essential cluster communication with the fabric services and kubernetes control plane.
 
-Be aware that Calico implements failsafe rules that override calico policies to make sure you don't break vital services. In production, it recommended to maintain bare minimum fine-tuned failsafe rule for vital service, as a last resort, and implement granular policies for all other service.
+Be aware that Calico implements failsafe rules that override calico policies to make sure you don't break vital services. In production, it recommended to maintain bare minimum fine-tuned failsafe rules for vital services, as a last resort, and implement granular policies for all other services.
 
 Refer to https://docs.tigera.io/security/protect-hosts#failsafe-rules
 
@@ -206,7 +206,7 @@ kubectl patch kubecontrollersconfiguration default --patch='{"spec": {"controlle
 
 ## 3.4- Apply global default deny
 
-The last step is to configure default deny global rule. This established zero-trust policies where you are allowing the bare minimum for intra-cluster and external communication and denying everyting else.
+The last step is to configure the default deny global rule. This established zero-trust policies where you are allowing the bare minimum for intra-cluster and external communication and denying everything else.
 
 ```
 kubectl apply -f -<<EOF
@@ -225,7 +225,7 @@ EOF
 
 At this point you have locked down your cluster to the bare minimum communication. 
 
-Let's repeat the test from app1 to the other pod in the same namesapce and to an external destination we did in step 2.4 in the previous lab. Now those two must fail as any communication that is not explicitly allowed is denied.
+Let's repeat the test from app1 to the other pod in the same namespace and to an external destination we did in step 2.4 in the previous lab. Now those two must fail as any communication that is not explicitly allowed is denied.
 
 Let's remember our source pod testing name:
 
