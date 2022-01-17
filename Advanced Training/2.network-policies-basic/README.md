@@ -10,7 +10,7 @@ Steps: \
 
 ## 2.1. Setup policy tiers
 
-The first step is to setup policy tiers which represent the policy hierarchy in your cluster. Policy tiers are containers that allow different personas in your organisation define policies into groups of different priorities based on their roles and governed by RBAC. In this example, we are defining 3 policy tiers (Platform, Security, Application), which are typical personas involved in policy development.
+The first step is to setup policy tiers which represent the policy hierarchy in your cluster. Policy tiers are containers that allow different personas in your organization define policies into groups of different priorities based on their roles and governed by RBAC. In this example, we are defining 3 policy tiers (Platform, Security, Application), which are typical personas involved in policy development.
 
 Navigate to the policy board using the toolbar on the left and click on "Policies".
 
@@ -62,8 +62,8 @@ default        <nil>
 
 ## 2.2. Apply policies to allow dns
 
-Next we will apply policies to allow ingress and egress communication with kubedns. DNS is a vital component of the cluster and is often linked to microservices communication issues or slownes. This will implement the failsafe rule for kube dns to avoid bricking it as we develop our policies.
-Notice the ingress and egress direction of flow with respect to selected endpoints, where ingress are incoming to the endpoint and egress are outgoing from the endpoint. Policy is applied at the Security tier level, which implements standard high-level enterprise controls. This avoid lower privileged users from modifying it and the policy order guarantees precedence over other policies in that tier. We are using NetworkPolicies to apply to the kube-system namespace specifically, which hosts kube dns.
+Next we will apply policies to allow ingress and egress communication with kubedns. DNS is a vital component of the cluster and is often linked to microservices communication issues or slowness. This will implement the failsafe rule for kube dns to avoid bricking it as we develop our policies.
+Notice the ingress and egress direction of flow with respect to selected endpoints, where ingress are incoming to the endpoint and egress are outgoing from the endpoint. Policy is applied at the Security tier level, which implements standard high-level enterprise controls. This avoids lower privileged users from modifying it and the policy order guarantees precedence over other policies in that tier. We are using NetworkPolicies to apply to the kube-system namespace specifically, which hosts kube dns.
 
 ```
 kubectl apply -f -<<EOF
@@ -115,7 +115,7 @@ security.ingress-allow-pods-to-kubedns   2m7s
 ## 2.3. Apply policies to secure yaobank app
 
 Last step in this lab is to apply Calico network policies to yaobank namespace to secure yaobank services communication. 
-Notice the order of policies which is only relevant in a sequential policy processing where you expect multiple match in the same tier for selected endpoints. It's not the case here however it's a good practice to follow a logical ordering process to simplify troubleshooting and analysis.
+Notice the order of policies which is only relevant in a sequential policy processing where you expect multiple matches in the same tier for selected endpoints. It's not the case here however it's a good practice to follow a logical ordering process to simplify troubleshooting and analysis.
 
 ```
 kubectl apply -f -<<EOF
@@ -253,7 +253,7 @@ Verify you cannot access the etcd port in the database deployment (use the IP ad
 
 However the yaobank rules allow us to access the resource from the `summary` microservice, so your browser should still be able to access yaobank.
 
-Access to any of the app2 pods should be successful (replace the IP for any of the two pods in the namesapce app2 your retrieved before).
+Access to any of the app2 pods should be successful (replace the IP for any of the two pods in the namespace app2 your retrieved before).
 
 ```
 # ping 10.48.0.211
