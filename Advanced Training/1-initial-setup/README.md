@@ -227,7 +227,7 @@ kubectl create -f https://docs.tigera.io/manifests/tigera-policies.yaml
 Perform the commands below to install the calicoctl client:
 
 ```
-curl -o calicoctl -O -L https://docs.tigera.io/download/binaries/v3.10.0/calicoctl
+curl -o calicoctl -O -L https://docs.tigera.io/download/binaries/v3.11.1/calicoctl
 ```
 ```
 chmod +x calicoctl
