@@ -10,7 +10,7 @@ In Calico Enterprise, global network policy and network policy resources are ass
 
 We will create two service accounts. One will belong to our security administrator, who will be in charge of implementing network security policies with a broader scope and which affect the whole environment. Those will be created in our security tier.
 
-The second account belongs to our developer. He must be able to access the application, or default tiers, but not able to see or modify any other policy higher in the hierarchy. He will not able to see or edit global policies, as the case of our `default-deny` policy applied in the default tier. Let's create our two service accounts.
+The second account belongs to our developer. He must be able to access the application, or default tiers, but not able to see or modify any other policy higher in the hierarchy. He will not be able to see or edit global policies, as the case of our `default-deny` policy applied in the default tier. Let's create our two service accounts.
 
 ```
 kubectl apply -f -<<EOF
@@ -136,7 +136,7 @@ roleRef:
 ---
 
 ##############################################
-# grant access to Enterpris Manager policy board view
+# grant access to Enterprise Manager policy board view
 ##############################################
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
@@ -226,7 +226,7 @@ roleRef:
 ---
 
 ##############################################
-# grant access to Enterpris Manager policy board view
+# grant access to Enterprise Manager policy board view
 ##############################################
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
