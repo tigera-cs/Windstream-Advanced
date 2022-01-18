@@ -68,7 +68,7 @@ spec:
 EOF
 ```
 
-Notice the ingress deny action for app1. This implies that pod1 is allowed egress communication with its own trusted domains in addition to global trsuted repos that we have previously defined.
+Notice the ingress deny action for app1. This implies that pod1 is allowed egress communication with its own trusted domains in addition to global .repos that we have previously defined.
 
 
 ## 6.4. Test
