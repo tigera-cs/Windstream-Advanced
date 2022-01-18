@@ -2,7 +2,7 @@
 
 ## 8.0. Introduction
 
-The purpose of this lab is to demonstrate the funciationality of Egress Gateway. In this lab, we will:
+The purpose of this lab is to demonstrate the functionality of Egress Gateway. In this lab, we will:
 
 8.1. Enable per namespace Egress Gateway support \
 8.2. Deploy an Egress Gateway in *one* namespace \
