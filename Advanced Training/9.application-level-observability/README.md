@@ -84,19 +84,5 @@ There you will see the Application level Dashboard for the yaobank application
 
 ![l7dashboard](img/9.3-dnsdashboard.png)
 
-## 9.5 Cleanup
 
-In the terminal where the script is running, execute the following command to stop the script (copy and paste to your terminal):
-
-```
-rm /tmp/runscript
-```
-
-After hitting the `Enter` key a couple of times, you should see a message as the one below:
-
-```
-[1]+  Done                    while [ -f /tmp/runscript ]; do
-    curl -si $(kubectl get svc -n yaobank | grep customer | awk {'print $3'}) | head -1; sleep 2;
-done
-```
 
