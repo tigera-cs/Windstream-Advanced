@@ -7,16 +7,16 @@ Steps: \
 9.2 Configure ApplicationLayer CRD \
 9.3 Select traffic for L7 log collection \
 9.4 Test your configuration \
-9.5 Check the Kibana Dashboard \
+9.5 Check the Kibana Dashboard 
 
 
+## 9.1 Configure Felix for log data collection
 
-## 9.1 Create tigera pull secret in app namespace
-
-Application layer data extends the default Calico flow logs adding layer 7 contextual information about the request. Calico enterprise provides extensive logging and observability featureset that Calico Enterprise uses in many functions, including threat defense, anomaly detection, machine learning, compliance reporting, service graph, policy recommendations, and many other functions. Logs can be also forwarded to your external SIEM for long term retention and compliance.
+First we need to enable the Policy Sync API in Felix. 
+To do this cluster-wide, modify the default FelixConfiguration to set the field policySyncPathPrefix to /var/run/nodeagent.
 
 ```
-kubectl create secret generic tigera-pull-secret -n yaobank --from-file=.dockerconfigjson=/home/tigera/config.json --type kubernetes.io/dockerconfigjson
+kubectl patch felixconfiguration default --type='merge' -p '{"spec":{"policySyncPathPrefix":"/var/run/nodeagent"}}'
 ```
 
 ## 9.2 Setup Envoy for application use
