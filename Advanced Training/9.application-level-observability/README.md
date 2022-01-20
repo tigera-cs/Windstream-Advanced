@@ -3,10 +3,12 @@
 In this lab, we will enable application layer data in flow logs.
 
 Steps: \
-9.1 Create tigera pull secret in app namespace \
-9.2 Setup Envoy for application use \
-9.3 Enable sidecar for targeted application pod \
-9.4 Check the DNS Dashboard in Kibana
+9.1 Configure Felix for log data collection \
+9.2 Configure ApplicationLayer CRD \
+9.3 Select traffic for L7 log collection \
+9.4 Test your configuration \
+9.5 Check the Kibana Dashboard \
+
 
 
 ## 9.1 Create tigera pull secret in app namespace
