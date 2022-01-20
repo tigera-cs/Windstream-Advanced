@@ -38,50 +38,18 @@ spec:
     logIntervalSeconds: 5
     logRequestsPerInterval: -1
 EOF
-
 ```
 
 
-## 9.3. Enable sidecar for targeted application pod
+## 9.3. Select traffic for L7 log collection
 
-Next enable yaobank to use Envoy. This will give us layer 7 visibility into micro-services communication. Notice the deployment of 2 sidecars alongside the app container, envoy and l7-collector. The function of l7-collector is to integrate with Envoy and extract flowlog data. Also notice that one of the steps includes enabling flowlogs for hostendpoints which is disabled by default. 
-
-```
-kubectl patch felixconfiguration default --type='merge' -p '{"spec":{"policySyncPathPrefix":"/var/run/nodeagent"}}'
-```
-```
-kubectl get deployment -n yaobank
-```
-```
-NAME       READY   UP-TO-DATE   AVAILABLE   AGE
-customer   1/1     1            1           2d16h
-database   1/1     1            1           2d16h
-summary    2/2     2            2           2d16h
-```
-```
-kubectl patch deployment customer -n yaobank --patch "$(cat patch-envoy.yaml)"
-```
-```
-kubectl patch deployment database -n yaobank --patch "$(cat patch-envoy.yaml)"
-```
-```
-kubectl patch deployment summary -n yaobank --patch "$(cat patch-envoy.yaml)"
-```
-```
-kubectl patch felixconfiguration default -p '{"spec":{"flowLogsEnableHostEndpoint":true}}'
-```
-
-Wait until the yaobank application is redeployed with the additional containers running as sidecars inside the pod 
+In order to select which traffic gets included in the L7 log collection we must annotate the service. Let’s do that for customer, database & summary: 
 
 ```
-watch kubectl get pod -n yaobank
-```
-```
-NAME                        READY   STATUS        RESTARTS   AGE
-customer-78647ff759-25p2z   3/3     Running       0          71s
-database-78f6d54974-bjwcv   3/3     Running       0          66s
-summary-77f9d5f98c-dbjkw    3/3     Running       0          54s
-summary-77f9d5f98c-fhdmr    3/3     Running       0          57s
+kubectl annotate svc customer -n yaobank projectcalico.org/l7-logging=true
+kubectl annotate svc database -n yaobank projectcalico.org/l7-logging=true
+kubectl annotate svc summary -n yaobank projectcalico.org/l7-logging=true
+
 ```
 
 ## 9.4. Verify The Application Level Dashboard
