@@ -52,21 +52,27 @@ kubectl annotate svc summary -n yaobank projectcalico.org/l7-logging=true
 
 ```
 
-## 9.4. Verify The Application Level Dashboard
+## 9.4. Test your configuration
 
-We need to retrieve the password for kibana you wrote down in previous labs. If you forgot to do so then execute the command below:
+To test your configuration lets drive some http traffic to one of the services we annotated above. 
 
-```
-kubectl -n tigera-elasticsearch get secret tigera-secure-es-elastic-user -o go-template='{{.data.elastic | base64decode}}' && echo
-```
-
-Before Checking the Dashboards, let's generate some http traffic for our yaobank application:
+Firstly fetch & take note of the correct IP for your customer service:
 
 ```
-touch /tmp/runscript ; while [ -f /tmp/runscript ] ; do curl -si $(kubectl get svc -n yaobank | grep customer | awk {'print $3'}) | head -1 ; sleep 2 ; done &
+kubectl get svc -n yaobank
 ```
 
-You will start seeing some HTTP responses displayed. This will keep running until we remove a file, but for now leave it running.
+Now let’s initiate some http traffic to that service from worker1:
+
+```
+ssh worker1
+curl –head <ip of customer's pod>
+```
+
+Please run the curl command multiple times to generate a number of entries in the logs.
+
+## 9.5 Check the Kibana Dashboard
+
 
 Access kibana from the left tool bar with the icon ![kibana](img/9.1-kib-icon.png). The default username is `elastic`.
 
