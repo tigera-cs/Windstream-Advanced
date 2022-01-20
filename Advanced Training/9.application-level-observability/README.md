@@ -19,98 +19,28 @@ To do this cluster-wide, modify the default FelixConfiguration to set the field 
 kubectl patch felixconfiguration default --type='merge' -p '{"spec":{"policySyncPathPrefix":"/var/run/nodeagent"}}'
 ```
 
-## 9.2 Setup Envoy for application use
+## 9.2 Configure ApplicationLayer CRD
 
-Let's deploy and setup Envoy for integration with Calico Enterprise and application use. Calico uses Envoy as the medium for extracting application layer contextual information. 
+In this step, you configure ApplicationLayer resource to gather the L7 logs.
+
+Create the ApplicationLayer resource named, tigera-secure: 
+Ensure that collectLogs fields is set to Enabled.
 
 ```
-curl https://docs.tigera.io/manifests/l7/patch-envoy.yaml -O
-```
-```
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-100  1693  100  1693    0     0   5008      0 --:--:-- --:--:-- --:--:--  5008
-```
-```
-cat patch-envoy.yaml
-```
-```
+kubectl apply -f -<<EOF
+apiVersion: operator.tigera.io/v1
+kind: ApplicationLayer
+metadata:
+  name: tigera-secure
 spec:
-  template:
-    spec:
-      containers:
-      - name: envoy-proxy
-        image: quay.io/tigera/envoy:v3.7.0
-        imagePullPolicy: IfNotPresent
-        securityContext:
-          runAsUser: 1729
-          runAsGroup: 1729
-          runAsNonRoot: true
-        env:
-        - name: ENVOY_UID
-          value: '1729'
-        - name: ENVOY_GID
-          value: '1729'
-        volumeMounts:
-        - name: envoy-config
-          mountPath: /etc/envoy
-        - name: envoy-logs
-          mountPath: /tmp/
-      - name: l7-collector
-        image: quay.io/tigera/l7-collector:v3.7.0
-        imagePullPolicy: IfNotPresent
-        env:
-        - name: LOG_LEVEL
-          value: "Panic"
-        - name: FELIX_DIAL_TARGET
-          value: "/var/run/felix/nodeagent/socket"
-        volumeMounts:
-        - name: envoy-logs
-          mountPath: /tmp/
-        - name: felix-sync
-          mountPath: /var/run/felix
-      imagePullSecrets:
-      - name: tigera-pull-secret
-      volumes:
-      - name: envoy-logs
-        emptyDir: {}
-      - name: felix-sync
-        flexVolume:
-          driver: nodeagent/uds
-      - name: envoy-config
-        configMap:
-          name: envoy-config
-      initContainers:
-      - name: envoy-init
-        image: quay.io/tigera/envoy-init:v3.7.0
-        imagePullPolicy: IfNotPresent
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            add:
-            - NET_ADMIN
-            - NET_RAW
-            - SETGID
-            - SETUID
-            drop:
-            - ALL
-          privileged: false
-          readOnlyRootFilesystem: false
-          runAsGroup: 0
-          runAsNonRoot: false
-          runAsUser: 0
+  logCollection:
+    collectLogs: Enabled
+    logIntervalSeconds: 5
+    logRequestsPerInterval: -1
+EOF
+
 ```
-```
-curl https://docs.tigera.io/manifests/l7/envoy-config.yaml -O
-```
-```
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-100  8184  100  8184    0     0  19912      0 --:--:-- --:--:-- --:--:-- 19864
-```
-```
-kubectl create configmap envoy-config -n yaobank --from-file=envoy-config.yaml
-```
+
 
 ## 9.3. Enable sidecar for targeted application pod
 
